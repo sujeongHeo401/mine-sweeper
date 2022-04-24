@@ -1,6 +1,7 @@
 from tkinter import Button, Label
 import random
 import settings 
+import ctypes
 
 class Cell:
     all = []
@@ -99,8 +100,9 @@ class Cell:
 
     
     def show_mine(self):
-        # A logic do interrupt the game and display a message that player lost! 
         self.cell_btn_object.configure(bg='red')
+        ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine', 'Game Over', 0)
+        
 
 
     def right_click_actions(self,event):
@@ -109,10 +111,16 @@ class Cell:
                 bg='orange'
             )
             self.is_mine_candidate = True
-            
+        else:
+            self.cell_btn_object.configure(
+                bg='SystemButtonFace'
+            )
+            self.is_mine_candidate = False
+
 
     
     @staticmethod
+
     def randomize_mines():
         picked_cells = random.sample(
             Cell.all,settings.MINES_COUNT
