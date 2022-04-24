@@ -2,7 +2,7 @@ from tkinter import Button, Label
 import random
 import settings 
 import ctypes
-
+import sys 
 class Cell:
     all = []
     cell_count = settings.CELL_COUNT
@@ -94,6 +94,11 @@ class Cell:
                 Cell.cell_count_label_object.configure(
                     text= f"Cells Left:{Cell.cell_count}"
                 )
+            # If this was a mine candidate, then for safety, we should
+            # configure the background color to SystemButtonFace
+            self.cell_btn_object.configure(
+                bg = 'SystemButtonFace'
+            )
 
         #Mark the cell as opened(Use is as the last line of this method)
         self.is_opened = True
@@ -102,6 +107,7 @@ class Cell:
     def show_mine(self):
         self.cell_btn_object.configure(bg='red')
         ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine', 'Game Over', 0)
+        sys.exit()
         
 
 
